@@ -14,7 +14,6 @@ function CategoryView() {
   );
 
   const navigate = useNavigate();
-
   const dragItem = useRef();
   const dragItemNode = useRef();
 
