@@ -5,8 +5,10 @@ import { data } from "../assets/data/data";
 function CategoryView() {
   const params = useParams();
   const [currentDataImages, setCurrentDataImages] = useState([]);
+  const [sectionTitle, setSectionTitle] = useState("");
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [draggedOverIndex, setDraggedOverIndex] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [newData, setNewData] = useState(
     JSON.parse(localStorage.getItem("images-data")) || data
   );
@@ -19,16 +21,17 @@ function CategoryView() {
   useEffect(() => {
     try {
       if (!params.id || !params.title) {
-        navigate("/dashboard");
+        navigate("/dashboard", { replace: true });
         return;
       }
       if (params.id > data.length) {
-        navigate("/dashboard");
+        navigate("/dashboard", { replace: true });
         return;
       }
+      setSectionTitle(newData[params.id - 1].name);
       setCurrentDataImages(newData[params.id - 1].images);
     } catch (err) {
-      navigate("/dashboard");
+      navigate("/dashboard" , {replace:true});
       return;
     }
 
@@ -81,7 +84,7 @@ function CategoryView() {
     <div className="flex flex-col gap-y-6  pt-8 max-md:pt-6 max-vsm:pt-4 max-vvsm:pt-4 px-6 max-vsm:px-4 max-vvsm:px-2 py-4 overflow-y-hidden">
       <div className="text-center">
         <span className="text-3xl max-ssm:text-2xl max-vvsm:text-xl font-oswald font-bold text-center dark:text-gray-300 text-gray-800 tracking-wide">
-          {params.title.toUpperCase()}
+          {sectionTitle.toUpperCase()}
         </span>
       </div>
       <div className="image-container flex w-full h-full justify-center place-items-center">
